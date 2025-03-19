@@ -47,7 +47,7 @@ def login_user(email_or_phone, password):
         except grpc.RpcError as e:
             print(f"Login Failed: {e.details()}")
 
-# ✅ Interactive CLI for Testing
+
 if __name__ == "__main__":
     print("\nConnecting to gRPC Server...\n")
     while True:
