@@ -19,7 +19,7 @@ class _LoginPageState extends State<LoginPage> {
 
     final stub = UserServiceClient(channel);
     try {
-      print("📡 Sending Login Request to gRPC server...");
+      print("Sending Login Request to gRPC server...");
       final response = await stub.login(
         LoginRequest(
           emailOrPhone: _emailController.text,
@@ -27,12 +27,12 @@ class _LoginPageState extends State<LoginPage> {
           useBiometric: false,
         ),
       );
-      print("✅ Response received: ${response.message}");
+      print("Response received: ${response.message}");
       setState(() {
         message = response.success ? "Welcome ${response.username}" : response.message;
       });
     } catch (e) {
-      print("❌ Failed to connect: $e"); // Print error message
+      print("Failed to connect: $e"); // Print error message
       setState(() {
         message = "Failed to connect to server";
       });

@@ -5,12 +5,10 @@ import proto.user_pb2_grpc as user_pb2_grpc
 
 SERVER_ADDRESS = "localhost:50051"  # Change to 50051 if not using gRPC-Web Proxy
 
-# ✅ Function to Hash Password Before Sending (Security)
 def hash_password(password):
     salt = b'somesalt'  # Use a random salt in production
     return hashlib.pbkdf2_hmac('sha256', password.encode(), salt, 100000)
 
-# ✅ Function to Register a User
 def register_user(email_or_phone, password, username, use_biometric):
     with grpc.insecure_channel(SERVER_ADDRESS) as channel:
         stub = user_pb2_grpc.UserServiceStub(channel)
@@ -25,11 +23,10 @@ def register_user(email_or_phone, password, username, use_biometric):
 
         try:
             response = stub.Register(request)
-            print(f"✅ Registration Response: {response.message}")
+            print(f"Registration Response: {response.message}")
         except grpc.RpcError as e:
-            print(f"❌ Registration Failed: {e.details()}")
+            print(f"Registration Failed: {e.details()}")
 
-# ✅ Function to Login a User
 def login_user(email_or_phone, password):
     with grpc.insecure_channel(SERVER_ADDRESS) as channel:
         stub = user_pb2_grpc.UserServiceStub(channel)
@@ -44,17 +41,17 @@ def login_user(email_or_phone, password):
         try:
             response = stub.Login(request)
             if response.success:
-                print(f"✅ Login Successful! Welcome, {response.username}")
+                print(f"Login Successful! Welcome, {response.username}")
             else:
-                print(f"❌ Login Failed: {response.message}")
+                print(f"Login Failed: {response.message}")
         except grpc.RpcError as e:
-            print(f"❌ Login Failed: {e.details()}")
+            print(f"Login Failed: {e.details()}")
 
 # ✅ Interactive CLI for Testing
 if __name__ == "__main__":
-    print("\n📡 Connecting to gRPC Server...\n")
+    print("\nConnecting to gRPC Server...\n")
     while True:
-        print("\n1️⃣ Register\n2️⃣ Login\n3️⃣ Exit")
+        print("\n1-Register\n2-Login\n3-Exit")
         choice = input("Select an option: ")
 
         if choice == "1":
@@ -70,8 +67,8 @@ if __name__ == "__main__":
             login_user(email_or_phone, password)
 
         elif choice == "3":
-            print("🚀 Exiting...")
+            print("Exiting...")
             break
 
         else:
-            print("❌ Invalid choice! Try again.")
+            print("Invalid choice! Try again.")
